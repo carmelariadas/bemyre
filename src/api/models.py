@@ -379,7 +379,7 @@ class UserMusicGenre(db.Model):
 class MusicalInstrumentsCategory(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(80),  nullable=False)
-        musical_instruments = db.relationship("MusicalInstrument", backref="musical_instruments_category", lazy=True)
+        # musical_instruments = db.relationship("MusicalInstrument", backref="musical_instruments_category", lazy=True)
             
 
         def __repr__(self):
@@ -389,13 +389,13 @@ class MusicalInstrumentsCategory(db.Model):
             return {
                 "id": self.id,
                 "name": self.name,
-                "musical_instruments": [musical_instrument.serialize() for musical_instrument in self.musical_instruments],
+                # "musical_instruments": [musical_instrument.serialize() for musical_instrument in self.musical_instruments],
             }
 
 
 class MusicalInstrument(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    musical_instruments_category_name = db.Column(db.String, db.ForeignKey('musical_instruments_category.name'), nullable=False)
+    # musical_instruments_category_name = db.Column(db.String, db.ForeignKey('musical_instruments_category.name'), nullable=False)
     # musical_instruments_category = relationship("MusicalInstrumentsCategory")
     # user_musical_instruments_id = db.Column(db.Integer, db.ForeignKey('user_musical_instrument.id'), nullable=False)
     name = db.Column(db.String(80), nullable=False)
