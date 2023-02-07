@@ -3,11 +3,11 @@ import React from "react";
 
 import "../../../../styles/cardbandas.css";
 
-export const CardBandasImg = ({ banda_img }) => {
+export const CardBandasImg = ({ band_img }) => {
   return (
     <>
       <Box className="contendorImg">
-        <img className="cardbandasimg" src={banda_img} />
+        <img className="cardbandasimg" src={band_img} />
       </Box>
     </>
   );

@@ -681,8 +681,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             return response.json();
           })
           .then((result) => {
-            setStore({ bandas: result });
-            console.log(result);
+            console.log('string', result);
+            setStore({ bandas: result.bandas });
+            
           });
       },
       fetchBandsMusicGenre: async () => {

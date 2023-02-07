@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: aa99c9f4dda2
+Revision ID: 1cbcadcf3676
 Revises: 
-Create Date: 2023-02-07 09:46:00.919764
+Create Date: 2023-02-07 13:11:55.952094
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'aa99c9f4dda2'
+revision = '1cbcadcf3676'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -182,11 +182,10 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
-    sa.Column('description', sa.String(length=80), nullable=True),
-    sa.Column('creation_date', sa.DateTime(), nullable=True),
-    sa.Column('last_update', sa.DateTime(), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('in_demand', sa.String(length=80), nullable=True),
     sa.Column('city_id', sa.Integer(), nullable=True),
-    sa.Column('band_img', sa.String(length=255), nullable=True),
+    sa.Column('band_img', sa.String(length=500), nullable=True),
     sa.ForeignKeyConstraint(['city_id'], ['city.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['user_musician_info.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -241,8 +240,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('band_id', sa.Integer(), nullable=False),
     sa.Column('user_musician_info_id', sa.Integer(), nullable=False),
-    sa.Column('creation_date', sa.DateTime(), nullable=True),
-    sa.Column('last_update', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['band_id'], ['bands.id'], ),
     sa.ForeignKeyConstraint(['user_musician_info_id'], ['user_musician_info.id'], ),
     sa.PrimaryKeyConstraint('id')

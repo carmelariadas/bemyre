@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import {  bandas, eventos, musicos } from "../mockingData";
+import {  eventos, musicos } from "../mockingData";
 import { Link } from "react-router-dom";
 
 //Import materials

@@ -8,13 +8,52 @@ import { Context } from "../store/appContext";
 
 export const Bandas = () => {
   const { actions, store } = useContext(Context);
+  // const [bandas, setBandas] = useState()
 
   const scrolltop = useRef();
   useEffect(() => {
     scrolltop.current?.scrollIntoView({ behavior: "smooth" });
-    actions.fetchBands();
+    // fetchTraerBandas()
+    
     // actions.fetchBandsMusicGenre()
   }, []);
+
+  useEffect(() => {
+    
+    actions.fetchBands();
+  }, []);
+
+  // const fetchTraerBandas = () => {
+  //   fetch('https://3001-carmelariadas-bemyre-g3law6n0poj.ws-eu85.gitpod.io/api/bandas')
+  //   .then((response) => {
+  //     console.log('esta es la response ' +response.json())
+  //     return response.json()})
+  //   .then((data)=> {
+  //     console.log('esta es la data ' + data)
+  //     setBandas(data)
+  //     return data
+    
+  //   })
+    
+  // }
+  // console.log(bandas)
+
+
+
+  // useEffect(() => {
+  //   const options = {
+  //     methods: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+  //   fetch(`${process.env.BACKEND_URL}/api/bandas`, options)
+  //     .then((response) => response.json())
+  //     .then((result) => {setBandas(result)});
+    
+  // }, []);
+
+
   return (
     <Box
       sx={{
@@ -33,17 +72,17 @@ export const Bandas = () => {
           Bandas de música cerca de ti
         </Typography>
         <Grid container spacing={2}>
-          {console.log("????????", store.bandas)}
-          {store.bandas?.map((element, index) => (
+        {console.log("??????hkhkuk??", store.bandas)}
+                  {store.bandas.map((element) => (
             <Grid item xs={12} sm={12} md={12} lg={6} key={element.id}>
               <CardBandas
-                banda_img={element.band_img}
+                band_img={element.band_img}
                 name={element.name}
                 // generosMusica={element.band_music_genres}
                 city={element.city}
                 description={element.description}
                 // integrantes={element.band_members}
-                // integrantes_nuevos={element.band_musical_intrument}
+                in_demand={element.in_demand}
               />
             </Grid>
           ))}

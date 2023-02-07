@@ -13,8 +13,9 @@ import { Button } from "@mui/material";
 export const CardBandasInfo = ({
   name,
   city,
-  integrantes,
+  // integrantes,
   description,
+  in_demand
 }) => {
   return (
     <CardContent >
@@ -36,17 +37,17 @@ export const CardBandasInfo = ({
           <span>{description}</span>
         </Typography>
       </Box>
-      {/* {integrantes_nuevos.map((element, index) => (
-        <Box key={index}>
+      
+        <Box>
           <Divider className="mb-2 mt-3"></Divider>
           <FlexBetween className="mx-5">
             <span  sx={{ marginLeft: 0 }} variant="body1">
-              {element.integrante_instrument}
+              {in_demand}
             </span>
             <Button variant="contained">Aplicar</Button>
           </FlexBetween>
         </Box>
-      ))} */}
+     
 
     </CardContent>
   );

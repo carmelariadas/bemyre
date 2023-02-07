@@ -887,15 +887,24 @@ def get_musicalintrument(musicalinstrumentcategory):
 
 @api.route('/bandas', methods=['GET'])
 def get_bandas():
-    try:
-        print('>>>>>>>????????>')
-        bandas = Bands.query.all()
-        bandas_list = []
-        for banda in bandas:
-            bandas_list.append(banda.serialize())
-        return jsonify(bandas_list), 200
-    except Exception as e:
-        return jsonify ({"error": e}), 400
+    # try:
+    print('>>>>>>>????????>')
+    bandas = Bands.query.all()
+    
+    # bandas = Bands.query.order_by(Bands.id.asc())
+    bandas = list(map(lambda banda:banda.serialize(), bandas))
+    print(bandas)
+    return jsonify ({'bandas': bandas}), 200
+    # bandas_list = []
+    # for banda in bandas:
+    #     bandas_list.append(banda.serialize())
+    # return jsonify(bandas_list), 200
+    # except Exception as e:
+    #     return jsonify ({"error": e}), 400
+
+
+
+
 
 
 @api.route('/bands-music-genre', methods=['GET'])

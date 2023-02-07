@@ -16,13 +16,13 @@ export const BandsCreation = () => {
     description: "",
     state: "",
     city: "",
-    band_music_genres: "",
+    // band_music_genres: "",
     band_img: "",
     // chips max 2 o 3, buscar a miembros q son musicos por el artistic name
-    artistic_name: [],
+    // artistic_name: [],
     // chips max 2 o 3, solo instrumentos:
     // musicalinstrumentcategory: "",
-    musicalinstrument: "",
+    in_demand: "",
   });
 
   useEffect(() => {
@@ -149,7 +149,7 @@ export const BandsCreation = () => {
 
                 {/* autocomplete con chips limitadas */}
 
-                <Autocomplete
+                {/* <Autocomplete
                   multiple
                   limitTags={3}
                   id="multiple-limit-tags-band"
@@ -166,7 +166,7 @@ export const BandsCreation = () => {
                     />
                   )}
                   sx={{ width: "500px" }}
-                />
+                /> */}
 
                 <div class="mb-3">
                   <label for="formFile" class="form-label">
@@ -184,7 +184,7 @@ export const BandsCreation = () => {
                   />
                 </div>
 
-                <Autocomplete
+                {/* <Autocomplete
                   multiple
                   limitTags={3}
                   // disablePortal
@@ -205,7 +205,7 @@ export const BandsCreation = () => {
                     />
                   )}
                   sx={{ width: "500px" }}
-                />
+                /> */}
                 {/* <Box className="form-city-state">
                   <Autocomplete
                     disablePortal
@@ -236,8 +236,8 @@ export const BandsCreation = () => {
                   variant="outlined"
                   id="outlined-basic-band"
                   label="Solicitar nuevo integrante"
-                  onChange={(e) => setData({ ...data, musicalinstrument: e.target.value })}
-                  value={data.musicalinstrument}
+                  onChange={(e) => setData({ ...data, in_demand: e.target.value })}
+                  value={data.in_demand}
                 />
 
                 {/* <Autocomplete

@@ -8,12 +8,13 @@ import { useTheme, Box } from "@mui/material";
 
 
 export const CardBandas = ({
-  banda_img,
+  band_img,
   name,
-  generosMusica,
+  // generosMusica,
   city,
   description,
-  integrantes,
+  // integrantes,
+  in_demand
 }) => {
   const theme = useTheme();
 
@@ -27,7 +28,7 @@ export const CardBandas = ({
           boxSizing: "content-box",
         }}
       >
-        <CardBandasImg banda_img={banda_img} />
+        <CardBandasImg band_img={band_img} />
         <Box
           sx={{
             display: "flex",
@@ -38,12 +39,12 @@ export const CardBandas = ({
           <CardBandasInfo
             name={name} 
             city={city}
-            integrantes={integrantes}
-            // integrantes_nuevos={integrantes_nuevos}
+            // integrantes={integrantes}
+            in_demand={in_demand}
             description={description}
           />
           <CardBandasFooter
-            generosMusica={generosMusica}
+            // generosMusica={generosMusica}
           />
         </Box>
       </Card>

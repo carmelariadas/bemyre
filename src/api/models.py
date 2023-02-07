@@ -74,6 +74,7 @@ class City(db.Model): #ciudades, pueblos
     name = db.Column(db.String(80), nullable=False)
     state = db.Column(db.String(80), db.ForeignKey('state.name'), nullable=False)
     locales = db.relationship('Local', backref='City', lazy=True)
+    bands = db.relationship('Bands', backref='City', lazy=True)
     
 
 
@@ -425,16 +426,19 @@ class Bands(db.Model):
     # owner = relationship("UserMusicianInfo", back_populates="bands")
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(500), nullable=True)
+    in_demand = db.Column(db.String(80), nullable=True)
     # music_genre_id = db.Column(db.String(120), db.ForeignKey('music_genre.name'), nullable=True)
     # music_genre = relationship("MusicGenre")
-    creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
-    last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
+    # creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
+    # last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     # band_members = relationship("BandMembers", back_populates="bands")
+    # city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=True)
+    # cities = db.relationship('City', backref='Bands', lazy=True)
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=True)
-    cities = db.relationship('City', backref='Bands', lazy=True)
+
     band_img = db.Column(db.String(500), nullable=True)
-    band_music_genres = db.relationship('BandMusicGenre', backref='bands', lazy=True)
-    band_members = relationship("BandMembers", backref="bands", lazy=True)
+    # band_music_genres = db.relationship('BandMusicGenre', backref='bands', lazy=True)
+    # band_members = relationship("BandMembers", backref="bands", lazy=True)
     # band_musical_intrument = db.relationship('BandMusicalIntrument', backref='bands', lazy=True)
 
 
@@ -446,13 +450,13 @@ class Bands(db.Model):
 
     
     def serialize(self):
-        bandas_list = []
-        for banda in self.band_music_genres:
-            bandas_list.append(banda.serialize())
-        print(bandas_list)
-        bandasmembers_list = []
-        for bandamember in self.band_members:
-            bandasmembers_list.append(bandamember.serialize())
+        # bandas_list = []
+        # for banda in self.band_music_genres:
+        #     bandas_list.append(banda.serialize())
+        # print(bandas_list)
+        # bandasmembers_list = []
+        # for bandamember in self.band_members:
+        #     bandasmembers_list.append(bandamember.serialize())
         # bands_musical_intrument_list = []
         # for band_musical_intrument in self.band_musical_intrument:
         #     bands_musical_intrument_list.append(band_musical_intrument.serialize())
@@ -460,18 +464,22 @@ class Bands(db.Model):
         return {
             "id": self.id,
             # "owner": self.owner.serialize(),
+            "band_img": self.band_img,
             "name": self.name,
             "description": self.description,
             # "music_genre": self.music_genre.serialize(),
-            "creation_date": self.creation_date.strftime("%Y-%m-%d %H:%M:%S"),
-            "last_update": self.last_update.strftime("%Y-%m-%d %H:%M:%S"),
+            # "creation_date": self.creation_date.strftime("%Y-%m-%d %H:%M:%S"),
+            # "last_update": self.last_update.strftime("%Y-%m-%d %H:%M:%S"),
             # "band_members ": [band_member.serialize() for band_member in self.band_members],
-            "band_img": self.band_img,
-            "band_music_genres": bandas_list, 
-            "band_members": bandasmembers_list,
+            "in_demand": self.in_demand,
+            # <<<<<<"band_music_genres": bandas_list, 
+            # <<<<<<"band_members": bandasmembers_list,
             # "band_musical_intrument": bands_musical_intrument_list,
             # "city": City.query.get(self.city_id).name,
-            "city": self.cities.name
+            # city esta bien????
+            # "city": self.cities.name
+            "city": City.query.get(self.city_id).name
+
 
         }
 
@@ -486,8 +494,8 @@ class BandMembers(db.Model):
     # member = relationship("UserMusicianInfo", back_populates="band_members")
     user_musician_info_id = Column(db.Integer, db.ForeignKey("user_musician_info.id"), nullable=False)
     user_musician_info = relationship("UserMusicianInfo", back_populates="band_members")
-    creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
-    last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
+    # creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
+    # last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     # band_musical_instrument = db.relationship('BandMusicalIntrument', backref='band_member', lazy=True)
 
     def __repr__(self):
@@ -496,10 +504,12 @@ class BandMembers(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "band_id": self.band_id,
+            "user_musician_info_id": self.user_musician_info_id
             # "band": self.band.serialize(),
             # "member": self.member.serialize(),
-            "creation_date": self.creation_date.strftime("%Y-%m-%d %H:%M:%S"),
-            "last_update": self.last_update.strftime("%Y-%m-%d %H:%M:%S"),
+            # "creation_date": self.creation_date.strftime("%Y-%m-%d %H:%M:%S"),
+            # "last_update": self.last_update.strftime("%Y-%m-%d %H:%M:%S"),
         }
  
 
