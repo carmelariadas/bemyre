@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: faf1743b9da2
+Revision ID: aa99c9f4dda2
 Revises: 
-Create Date: 2023-02-06 22:07:40.954917
+Create Date: 2023-02-07 09:46:00.919764
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'faf1743b9da2'
+revision = 'aa99c9f4dda2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,17 +30,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
-    op.create_table('musical_instrument',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=80), nullable=False),
-    sa.Column('creation_date', sa.DateTime(), nullable=True),
-    sa.Column('last_update', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('musical_instruments_category',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('user_type',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -53,6 +47,15 @@ def upgrade():
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('genre', sa.String(length=80), nullable=True),
     sa.ForeignKeyConstraint(['genre'], ['music_genre.name'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('musical_instrument',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('musical_instruments_category_name', sa.String(), nullable=False),
+    sa.Column('name', sa.String(length=80), nullable=False),
+    sa.Column('creation_date', sa.DateTime(), nullable=True),
+    sa.Column('last_update', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['musical_instruments_category_name'], ['musical_instruments_category.name'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('state',
@@ -180,8 +183,8 @@ def upgrade():
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('description', sa.String(length=80), nullable=True),
-    sa.Column('creation_date', sa.DateTime(), nullable=False),
-    sa.Column('last_update', sa.DateTime(), nullable=False),
+    sa.Column('creation_date', sa.DateTime(), nullable=True),
+    sa.Column('last_update', sa.DateTime(), nullable=True),
     sa.Column('city_id', sa.Integer(), nullable=True),
     sa.Column('band_img', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['city_id'], ['city.id'], ),
@@ -229,7 +232,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_musician_info_id', sa.Integer(), nullable=False),
     sa.Column('musical_instrument_id', sa.Integer(), nullable=False),
-    sa.Column('last_update', sa.DateTime(), nullable=False),
+    sa.Column('last_update', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['musical_instrument_id'], ['musical_instrument.id'], ),
     sa.ForeignKeyConstraint(['user_musician_info_id'], ['user_musician_info.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -238,8 +241,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('band_id', sa.Integer(), nullable=False),
     sa.Column('user_musician_info_id', sa.Integer(), nullable=False),
-    sa.Column('creation_date', sa.DateTime(), nullable=False),
-    sa.Column('last_update', sa.DateTime(), nullable=False),
+    sa.Column('creation_date', sa.DateTime(), nullable=True),
+    sa.Column('last_update', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['band_id'], ['bands.id'], ),
     sa.ForeignKeyConstraint(['user_musician_info_id'], ['user_musician_info.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -297,10 +300,10 @@ def downgrade():
     op.drop_table('city')
     op.drop_table('user')
     op.drop_table('state')
+    op.drop_table('musical_instrument')
     op.drop_table('influence_band')
     op.drop_table('user_type')
     op.drop_table('musical_instruments_category')
-    op.drop_table('musical_instrument')
     op.drop_table('music_genre')
     op.drop_table('country')
     # ### end Alembic commands ###

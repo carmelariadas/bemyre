@@ -170,7 +170,8 @@ class User(db.Model):
     last_login = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     is_musician = db.Column(db.Boolean(), unique=False, nullable=False)
-    user_musician_info = relationship("UserMusicianInfo")
+    user_musician_info = db.relationship("UserMusicianInfo", backref="User", lazy=True)
+
     # user_musician_info = db.relationship("UserMusicianInfo", back_populates="user", uselist=False)
 
     locales = relationship("Local", backref="user", lazy=True)
@@ -345,7 +346,7 @@ class UserMusicalInstrument(db.Model):
     musical_instrument_id = db.Column(db.Integer, db.ForeignKey('musical_instrument.id'), nullable=False)
     # user_musician_info = relationship("UserMusicianInfo", back_populates="user_musical_instruments")
     # musical_instrument = relationship("MusicalInstrument", backref="user_musical_instrument", lazy=True)	
-    last_update = db.Column(db.DateTime, nullable=False, default = datetime.datetime.utcnow)
+    last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     def __repr__(self):	
         return f'<UserMusicalInstrument {self.musical_instrument.name}>'
     def serialize(self):
@@ -378,8 +379,8 @@ class UserMusicGenre(db.Model):
 
 class MusicalInstrumentsCategory(db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(80),  nullable=False)
-        # musical_instruments = db.relationship("MusicalInstrument", backref="musical_instruments_category", lazy=True)
+        name = db.Column(db.String(80), unique=True, nullable=False)
+        musical_instruments = db.relationship("MusicalInstrument", backref="MusicalInstrumentsCategory", lazy=True)
             
 
         def __repr__(self):
@@ -389,13 +390,13 @@ class MusicalInstrumentsCategory(db.Model):
             return {
                 "id": self.id,
                 "name": self.name,
-                # "musical_instruments": [musical_instrument.serialize() for musical_instrument in self.musical_instruments],
+                "musical_instruments": [musical_instrument.serialize() for musical_instrument in self.musical_instruments],
             }
 
 
 class MusicalInstrument(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # musical_instruments_category_name = db.Column(db.String, db.ForeignKey('musical_instruments_category.name'), nullable=False)
+    musical_instruments_category_name = db.Column(db.String, db.ForeignKey('musical_instruments_category.name'), nullable=False)
     # musical_instruments_category = relationship("MusicalInstrumentsCategory")
     # user_musical_instruments_id = db.Column(db.Integer, db.ForeignKey('user_musical_instrument.id'), nullable=False)
     name = db.Column(db.String(80), nullable=False)
@@ -423,15 +424,15 @@ class Bands(db.Model):
 
     # owner = relationship("UserMusicianInfo", back_populates="bands")
     name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(80), nullable=True)
+    description = db.Column(db.String(500), nullable=True)
     # music_genre_id = db.Column(db.String(120), db.ForeignKey('music_genre.name'), nullable=True)
     # music_genre = relationship("MusicGenre")
-    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-    last_update = db.Column(db.DateTime, nullable=False, default = datetime.datetime.utcnow)
+    creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
+    last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     # band_members = relationship("BandMembers", back_populates="bands")
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=True)
     cities = db.relationship('City', backref='Bands', lazy=True)
-    band_img = db.Column(db.String(255), nullable=True)
+    band_img = db.Column(db.String(500), nullable=True)
     band_music_genres = db.relationship('BandMusicGenre', backref='bands', lazy=True)
     band_members = relationship("BandMembers", backref="bands", lazy=True)
     # band_musical_intrument = db.relationship('BandMusicalIntrument', backref='bands', lazy=True)
@@ -485,8 +486,8 @@ class BandMembers(db.Model):
     # member = relationship("UserMusicianInfo", back_populates="band_members")
     user_musician_info_id = Column(db.Integer, db.ForeignKey("user_musician_info.id"), nullable=False)
     user_musician_info = relationship("UserMusicianInfo", back_populates="band_members")
-    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-    last_update = db.Column(db.DateTime, nullable=False, default = datetime.datetime.utcnow)
+    creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
+    last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     # band_musical_instrument = db.relationship('BandMusicalIntrument', backref='band_member', lazy=True)
 
     def __repr__(self):

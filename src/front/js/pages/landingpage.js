@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { locales, bandas, eventos, musicos } from "../mockingData";
+import {  bandas, eventos, musicos } from "../mockingData";
 import { Link } from "react-router-dom";
 
 //Import materials
@@ -26,10 +26,16 @@ export const LandingPage = () => {
   const [longitude, setLongitude] = useState();
   const [currentCity, setCurrentCity] = useState();
   const [provincia, setProvincia] = useState();
+// <<<<<<<<<<<locales
+  const [locales, setLocales] = useState();
+// <<<<<<<<<<<locales
+
   const date = new Date();
 
   const day = date.getDate();
   const month = date.getMonth() + 1;
+
+
 
   const fetchCityName = async () => {
     const apiKey = store.geo_api_key;
@@ -86,6 +92,43 @@ export const LandingPage = () => {
   useEffect(()=>{
     console.log(provincia)
   },[provincia])
+
+
+  // <<<<<<<<<<locales
+
+  useEffect(() => {
+    const options = {
+      methods: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    fetch(`${process.env.BACKEND_URL}/api/locales`, options)
+      .then((response) => response.json())
+      .then((result) => {setLocales(result)});
+  }, []);
+
+// c
+  useEffect(() => {
+    console.log('holaaa!!')
+    const options = {
+      methods: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      headers: {
+        Authorization: `Bearer ${store.token_local}`,
+      },
+    };
+    fetch(`${process.env.BACKEND_URL}/api/local_musicgenre`, options)
+      .then((response) => response.json())
+      .then((result) => setGenres(result));
+      
+  }, []);
+
+
+  // <<<<<<<<<<locales
+
 
   const scrolltop = useRef()
   useEffect(()=>{
@@ -206,8 +249,8 @@ export const LandingPage = () => {
                 city={element.city}
                 ubicacion_local={element.ubicacion_local}
                 description={element.description}
-                generosMusica={element.generosMusica}
-                Key={index}
+                local_music_genres={element.local_music_genres}
+                to={`/localprofile/${element.id}`}
               />
             </Box>
           ))}
