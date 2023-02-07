@@ -128,7 +128,12 @@ export const LandingPage = () => {
 
 
   // <<<<<<<<<<locales
-
+// <<<<<<<<<<<<<bandas
+useEffect(() => {
+    
+  actions.fetchBands();
+}, []);
+// <<<<<<<<<<<bandas
 
   const scrolltop = useRef()
   useEffect(()=>{
@@ -275,17 +280,16 @@ export const LandingPage = () => {
             // marginY: "5rem"
           }}
         >
-          {bandas?.map((element, index) => (
+          {store.bandas?.map((element, index) => (
             <Box key={index}>
               <CardBandas
-                banda_img={element.banda_img}
+                band_img={element.band_img}
                 name={element.name}
-                generosMusica={element.generosMusica}
+                // generosMusica={element.generosMusica}
                 city={element.city}
-                ubicacion_local={element.ubicacion_local}
                 description={element.description}
-                integrantes={element.integrantes}
-                integrantes_nuevos={element.integrantes_nuevos}
+                // integrantes={element.band_members}
+                in_demand={element.in_demand}
                 Key={index}
               />
             </Box>
