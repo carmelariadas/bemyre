@@ -295,13 +295,15 @@ class UserSocialMedia(db.Model):
 class UserMusicianInfo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True, nullable=False)
-    user = relationship ('User', back_populates="user_musician_info")
+    # user = db.relationship ('User', backref="user_musician_info", lazy=True)
     # user_musical_instruments = db.relationship("UserMusicalInstrument", back_populates="user_musician_info")
 
     artistic_name = db.Column(db.String(80), unique=False, nullable=True)
     user_musical_intrument = db.relationship('UserMusicalInstrument', backref='user_musician_info', lazy=True)
-    bands = relationship("Bands", backref="user_musician_info", lazy=True)
-    band_members = relationship("BandMembers", back_populates="user_musician_info", uselist=False)
+    # bands = db.relationship("Bands", backref="user_musician_info", lazy=True)
+    band_members = db.relationship("BandMembers", backref="user_musician_info", lazy=True)
+        
+
     user_music_genre = db.relationship('UserMusicGenre', backref='user_musician_info', lazy=True)
 
 
@@ -438,7 +440,7 @@ class Bands(db.Model):
 
     band_img = db.Column(db.String(500), nullable=True)
     # band_music_genres = db.relationship('BandMusicGenre', backref='bands', lazy=True)
-    # band_members = relationship("BandMembers", backref="bands", lazy=True)
+    band_members = relationship("BandMembers", backref="bands", lazy=True)
     # band_musical_intrument = db.relationship('BandMusicalIntrument', backref='bands', lazy=True)
 
 
@@ -483,7 +485,17 @@ class Bands(db.Model):
 
         }
 
-
+# class UserBandMembers(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     band_member_id = db.Column(db.Integer, db.ForeignKey('bands.id'), nullable=False)
+#     # bands = relationship("Bands", back_populates="band_members")
+#     # member_id = db.Column(db.Integer, db.ForeignKey('user_musician_info.user_id'), nullable=False)
+#     # member = relationship("UserMusicianInfo", back_populates="band_members")
+#     user_musician_info_id = Column(db.Integer, db.ForeignKey("user_musician_info.id"), nullable=False)
+#     # user_musician_info = relationship("UserMusicianInfo", back_populates="band_members")
+#     # creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
+#     # last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
+#     # band_musical_instrument = db.relationship('BandMusicalIntrument', backref='band_member', lazy=True
 
 
 class BandMembers(db.Model):
@@ -493,7 +505,7 @@ class BandMembers(db.Model):
     # member_id = db.Column(db.Integer, db.ForeignKey('user_musician_info.user_id'), nullable=False)
     # member = relationship("UserMusicianInfo", back_populates="band_members")
     user_musician_info_id = Column(db.Integer, db.ForeignKey("user_musician_info.id"), nullable=False)
-    user_musician_info = relationship("UserMusicianInfo", back_populates="band_members")
+    # user_musician_info = relationship("UserMusicianInfo", back_populates="band_members")
     # creation_date = db.Column(db.DateTime, nullable=True, default=datetime.datetime.utcnow)
     # last_update = db.Column(db.DateTime, nullable=True, default = datetime.datetime.utcnow)
     # band_musical_instrument = db.relationship('BandMusicalIntrument', backref='band_member', lazy=True)

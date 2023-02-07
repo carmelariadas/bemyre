@@ -290,6 +290,7 @@ useEffect(() => {
                 description={element.description}
                 // integrantes={element.band_members}
                 in_demand={element.in_demand}
+                to={`/bandprofile/${element.id}`}
                 Key={index}
               />
             </Box>

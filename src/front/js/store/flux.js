@@ -1,3 +1,6 @@
+import swal from 'sweetalert';
+
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -599,6 +602,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
       publicarBand: async (data) => {
+        
         let body = new FormData();
         for (let key in data) {
           body.append(key, data[key]);
@@ -615,7 +619,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           `${process.env.BACKEND_URL}/api/settings/publicband`,
           options
         )
-          .then((resp) => resp.json())
+          .then((resp) => {
+            resp.json(); 
+            if(resp.ok){
+              swal({
+                title: "Perfil de banda creado",
+                text: "You clicked the button!",
+                // icon: "success",
+                button: "ok!",
+              });
+              
+            }
+          })
           .then((result) => {
             console.log(result);
             // getActions().fetchBandas();

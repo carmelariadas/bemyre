@@ -11,10 +11,11 @@ export const CardBandas = ({
   band_img,
   name,
   // generosMusica,
-  city,
+  city, 
   description,
   // integrantes,
-  in_demand
+  in_demand,
+  to
 }) => {
   const theme = useTheme();
 
@@ -43,7 +44,7 @@ export const CardBandas = ({
             in_demand={in_demand}
             description={description}
           />
-          <CardBandasFooter
+          <CardBandasFooter to={to}
             // generosMusica={generosMusica}
           />
         </Box>

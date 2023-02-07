@@ -66,7 +66,7 @@ export const Bandas = () => {
         text2="Crea tu propio anuncio para que otros músicos se unan a tu banda"
         title="Crear banda"
         to="/home"
-      />
+      /> 
       <Container className="mb-5">
         <Typography className="mb-5 text-center" variant="h2">
           Bandas de música cerca de ti
@@ -83,6 +83,7 @@ export const Bandas = () => {
                 description={element.description}
                 // integrantes={element.band_members}
                 in_demand={element.in_demand}
+                to={`/bandprofile/${element.id}`}
               />
             </Grid>
           ))}

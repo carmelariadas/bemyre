@@ -6,7 +6,7 @@ import {
   Card,
   CardContent,
   Chip,
-  Divider, 
+  Divider,
   List,
   ListItemText,
   Typography,
@@ -15,12 +15,15 @@ import { useTheme, Box } from "@mui/material";
 import { Context } from "../../store/appContext";
 import FlexBetween from "../../component/styledcomponents/FlexBetween.jsx";
 
-export const CardLocalProfile = ({
-  local_img,
-  name,
-  ubicacion_local,
-  // city,
-  description,
+export const CardBandsProfile = ({
+    band_img,
+    name,
+    // generosMusica,
+    city,
+    description,
+    // integrantes,
+    in_demand,
+    
 }) => {
   // const { actions, store } = useContext(Context);
   const theme = useTheme();
@@ -35,17 +38,17 @@ export const CardLocalProfile = ({
       }}
     >
       <Box className="contendorImg">
-        <img className="card-localprofile-img" src={local_img} />
+        <img className="card-localprofile-img" src={band_img} />
       </Box>
 
       <CardContent>
         <Typography variant="h3">
-          {name} |{/* {city} */}
+          {name} |{city}
         </Typography>
       </CardContent>
-      <CardContent>
+      {/* <CardContent>
         <Typography variant="body1">{ubicacion_local}</Typography>
-      </CardContent>
+      </CardContent> */}
       <CardContent>
         <Typography variant="body1">{description}</Typography>
       </CardContent>

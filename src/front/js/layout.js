@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { Context } from "./store/appContext";
 import injectContext from "./store/appContext";
 
-// >>> components >>>>
+// >>> components >>>> 
 import Navbar from "./component/navbar/Navbar.js";
 import Logout from "./pages/Logout.js";
 import Explore from "./pages/Explore.js";
@@ -75,7 +75,7 @@ const Layout = () => {
                   onSuccess={() => {
                     this.setState({ loginStatus: true });
                   }}
-                />
+                /> 
               }
               path="/login" 
             />
@@ -85,7 +85,7 @@ const Layout = () => {
               <Route element={<LandingPage />} path="/home" />
             )}
             <Route element={<Signup />} path="/signup" />
-            <Route element={<BandProfile />} exact path="/bandprofile/:id" />
+            <Route element={<BandProfile />} exact path="/bandprofile/:bandaid" />
             <Route element={<LocalProfile />} exact path="/localprofile/:id" />
             <Route element={<Faq />} path="/faq" />
             <Route

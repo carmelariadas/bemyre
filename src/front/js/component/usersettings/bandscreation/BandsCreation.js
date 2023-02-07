@@ -7,9 +7,11 @@ import { Box, Button, Divider, TextField } from "@mui/material";
 import { Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import UniqueBand from "./uniqueBand";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const BandsCreation = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate()
 
   const [data, setData] = useState({
     name: "",
@@ -184,7 +186,7 @@ export const BandsCreation = () => {
                   />
                 </div>
 
-                {/* <Autocomplete
+                <Autocomplete
                   multiple
                   limitTags={3}
                   // disablePortal
@@ -205,7 +207,7 @@ export const BandsCreation = () => {
                     />
                   )}
                   sx={{ width: "500px" }}
-                /> */}
+                />
                 {/* <Box className="form-city-state">
                   <Autocomplete
                     disablePortal
@@ -266,7 +268,10 @@ export const BandsCreation = () => {
                 <Button
                   variant="outlined"
                   color="error"
-                  onClick={() => actions.publicarBand(data)}
+                  onClick={() => {
+                    actions.publicarBand(data)
+                    // navigate('/home')
+                  }}
                 >
                   Publicar
                 </Button>

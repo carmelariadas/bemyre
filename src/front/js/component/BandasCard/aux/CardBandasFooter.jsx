@@ -6,6 +6,7 @@ import { CardsButton } from "../../buttons/CardsButton.jsx";
 export const CardBandasFooter = ({
 
   generosMusica,
+  to
 }) => {
   const handleDelete = () => {
     console.info("You clicked the delete icon.");
@@ -29,7 +30,7 @@ export const CardBandasFooter = ({
       </Box>
 
       <Box sx={{ display: "flex", gap: "0.25rem" }}>
-        <CardsButton minWidth="160px" title="Más info" />
+        <CardsButton minWidth="160px" title="Más info" to={to} />
         <CardsButton minWidth="160px" title="Seguir" />
       </Box>
     </>

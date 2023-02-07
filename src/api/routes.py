@@ -556,6 +556,12 @@ def get_localprofile(id):
     local = local.serialize()
     return jsonify(local), 200
 
+@api.route('/bandasprofile/<int:bandaid>', methods=['GET'])
+def get_bandasprofile(bandaid):
+    print('holaaa')
+    banda = Bands.query.filter_by(id=bandaid).first()
+    banda = banda.serialize()
+    return jsonify(banda), 200
 
 # @api.route('settings/locales', methods=['GET'])
 # @jwt_required()
@@ -796,10 +802,12 @@ def public_band():
     data=request.form
     if db.session.query(Bands).filter(Bands.name == data['name']).first():
         return jsonify({"message": "Este perfil de banda ya está registrado"}),400
+    new_band = None
     try:
-        print(result['secure_url'], data['artistic_name'])
+        # print(result['secure_url'], data['artistic_name'])
         new_band = Bands(
-            name = data['name'],            
+            name = data['name'],
+            in_demand = data['in_demand'],          
             description = data["description"],
             city_id = city.id,
             owner_id = user.id,
@@ -810,28 +818,41 @@ def public_band():
     except Exception as error:
         print(error)
 
-    print(body_band_music_genre)
+    # print(body_band_music_genre)
 
-    for name in body_band_music_genre.split(','):
-        current_genre = MusicGenre.query.filter_by(name = name).first()
-        new_band_music_genre = BandMusicGenre(
-            bands_id = new_band.id,
-            musicgenre_id = current_genre.id
-        )
-        db.session.add(new_band_music_genre)
-    db.session.commit()
 
+    # for name in body_band_music_genre.split(','):
+    #     current_genre = MusicGenre.query.filter_by(name = name).first()
+    #     new_band_music_genre = BandMusicGenre(
+    #         bands_id = new_band.id,
+    #         musicgenre_id = current_genre.id
+    #     )
+    #     db.session.add(new_band_music_genre)
+    # db.session.commit()
     
+    print(body_artistic_names)
     for name in body_artistic_names.split(','):
         user_musician_info = UserMusicianInfo.query.filter_by(artistic_name=name).first()
         # current_artistic_name = BandMembers.query.filter_by(user_musician_info_id = name).first()
+        print(user_musician_info)
+        # print(name)
         new_band_member = BandMembers(
             band_id = new_band.id,
             user_musician_info_id = user_musician_info.id
         )
         db.session.add(new_band_member)
-    db.session.commit()
+        db.session.commit()
 
+    # # for name in body_artistic_names:
+    # user_musician_info = UserMusicianInfo.query.filter_by(artistic_name=body_artistic_names).first()
+    # # current_artistic_name = BandMembers.query.filter_by(user_musician_info_id = name).first()
+    # print(user_musician_info)
+    # new_band_member = BandMembers(
+    #     band_id = new_band.id,
+    #     user_musician_info_id = user_musician_info.id
+    # )
+    # db.session.add(new_band_member)
+    # db.session.commit()
 
 
 
